@@ -5,7 +5,6 @@ from .serializers import BookSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
 
 # List all books and create a new book
 class BookListCreateView(generics.ListCreateAPIView):
@@ -13,8 +12,8 @@ class BookListCreateView(generics.ListCreateAPIView):
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['title', 'author', 'isbn']  # Enable searching by these fields
-    ordering_fields = ['published_date', 'title']  # Enable ordering by these fields
+    search_fields = ['title', 'author', 'isbn']
+    ordering_fields = ['published_date', 'title'] 
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
@@ -30,9 +29,9 @@ class UserBooksListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Return books that were added by the current user
         user = self.request.user
 
+        # Filtering by title, author and description
         title = self.request.query_params.get('title', None)
         author = self.request.query_params.get('author', None)
         description = self.request.query_params.get('description', None)
