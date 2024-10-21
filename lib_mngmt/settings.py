@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'allauth',
+    'corsheaders',
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework.authtoken',  # For token-based auth
@@ -54,12 +55,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000', # Change this based on the URL/Port of frontend
+]
+
 
 ROOT_URLCONF = 'lib_mngmt.urls'
 
