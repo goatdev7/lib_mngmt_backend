@@ -4,6 +4,7 @@ from .models import Book
 from .serializers import BookSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 
 # List all books and create a new book
@@ -30,19 +31,16 @@ class UserBooksListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        # queryset = Book.objects.filter(added_by = self.request.user)
+        queryset = Book.objects.all()
+        search = self.request.query_params.get('search', None)
 
-        # Filtering by title, author and description
-        title = self.request.query_params.get('title', None)
-        author = self.request.query_params.get('author', None)
-        description = self.request.query_params.get('description', None)
-
-        queryset = Book.objects.filter(added_by = self.request.user)
-
-        if title:
-            queryset = queryset.filter(title__icontains = title)
-        elif author:
-            queryset = queryset.filter(author__icontains = author)
-        elif description:
-            queryset = queryset.filter(description__icontains = description)
+        # # If a search term is provided, filter across title, author, and description
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) |
+                Q(author__icontains=search) |
+                Q(description__icontains=search)
+            )
 
         return queryset
