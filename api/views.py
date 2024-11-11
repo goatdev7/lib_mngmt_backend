@@ -13,7 +13,7 @@ from django.db.models import Q
 class BookListCreateView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsLibrarianOrAdmin]
 
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
