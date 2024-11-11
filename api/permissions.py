@@ -14,3 +14,15 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Write permissions are only allowed to the user who added the book.
         return obj.added_by == request.user
+
+
+class IsLibrarianOrAdmin(permissions.BasePermission):
+    """
+    Custom permission to only allow librarians or admin users to add books.
+    """
+
+    def has_permission(self, request, view):
+        # Allow access if the user is authenticated and is an admin or librarian
+        return request.user.is_authenticated and (request.user.is_staff or request.user.groups.filter(name='librarians').exists())
+
+

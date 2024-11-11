@@ -74,21 +74,22 @@ ROOT_URLCONF = 'lib_mngmt.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication', 
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 15,
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Set token expiration time (e.g., 30 minutes)
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Refresh token expiration time (e.g., 1 day)
-    'ROTATE_REFRESH_TOKENS': True,  # Automatically rotate refresh tokens upon usage
-    'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens
-}
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Set token expiration time (e.g., 30 minutes)
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Refresh token expiration time (e.g., 1 day)
+#     'ROTATE_REFRESH_TOKENS': True,  # Automatically rotate refresh tokens upon usage
+#     'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens
+# }
 
 TEMPLATES = [
     {
@@ -146,7 +147,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-REST_USE_JWT = True
+REST_USE_JWT = False
 
 USE_I18N = True
 

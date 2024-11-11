@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import BookListCreateView, BookDetailView, UserBooksListView
+from .views import BookListCreateView, BookDetailView, UserBooksListView, UserRoleView
 
 urlpatterns = [
     path('auth/', include('dj_rest_auth.urls')),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('books/', BookListCreateView.as_view(), name='book-list'), 
     path('books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
     path('my-books/', UserBooksListView.as_view(), name='user-books'),
+    path('user/', UserRoleView.as_view(), name='user-role'),
 ]
