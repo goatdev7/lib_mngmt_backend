@@ -32,7 +32,6 @@ class UserBooksListView(generics.ListAPIView):
         user = self.request.user
         # queryset = Book.objects.filter(added_by = self.request.user)
         queryset = Book.objects.all()
-        print("\n query_params:", self.request.query_params)
         search = self.request.query_params.get('search', None)
 
         # # If a search term is provided, filter across title, author, and description
